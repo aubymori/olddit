@@ -1,0 +1,26 @@
+{% extends "core.twig" %}
+
+{%- block title -%}
+reddit: the front page of the internet
+{% endblock %}
+
+{% set srSelectedLink = 1 %}
+
+{% set tabs = [
+    {
+        "label": "hot",
+        "url": "/",
+        "selected": true
+    }
+] %}
+
+{% block content %}
+{% import "macros/thing.twig" as thing %}
+{# <code>
+    {{ rdt.page.response }}
+</code> #}
+{% for thing in rdt.page.postList %}
+{{ thing.post(thing, loop.index + rdt.page.count, true) }}
+<div class="clearleft"></div>
+{% endfor %}
+{% endblock %}

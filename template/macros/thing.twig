@@ -1,0 +1,55 @@
+{% macro post(thing, index, showRank) %}
+{% if thing.kind == "t3" %}
+{% set data = thing.data %}
+<div class="thing id-{{ data.name }} {{ index is even ? "even" : "odd" }} {{ data.gilded > 1 ? "gilded" }} link {{ data.is_self ? "self" }}">
+    <p class="parent"></p>
+    {% if showRank %}
+    <span class="rank">{{ index }}</span>
+    {% endif %}
+    <div class="midcol unvoted">
+        <div class="arrow up login-required access-required" role="button"></div>
+        <div class="score dislikes" title="{{ data.ups - 1 }}">{{ abbrNum(data.ups - 1) }}</div>
+        <div class="score unvoted" title="{{ data.ups }}">{{ abbrNum(data.ups) }}</div>
+        <div class="score likes" title="{{ data.ups + 1 }}">{{ abbrNum(data.ups + 1) }}</div>
+        <div class="arrow down login-required access-required" role="button"></div>
+    </div>
+    <a href="{{ data.permalink }}" class="thumbnail invisible-when-pinned {{ data.thumbnail == "default" ? "default" }} {{ data.is_self ? "self" }} may-blank">
+        {% if data.thumbnail != "default" %}
+        <img src="{{ data.thumbnail }}" width="70" alt="">
+        {% endif %}
+        {% if data.secure_media.reddit_video %}
+        <div class="duration-overlay">{{ secToMin(data.secure_media.reddit_video.duration) }}</div>
+        {% endif %}
+    </a>
+    <div class="entry-unvoted">
+        <div class="top-matter">
+            <p class="title">
+                <a href="{{ data.url_overriden_by_dest ? data.url_overriden_by_dest : data.permalink }}" class="title may-blank outbound">{{ data.title }}</a>
+                {% if data.domain %}
+                <span class="domain">
+                    (<a href="/domain/{{ data.domain }}">{{ data.domain }}</a>)
+                </span>
+                {% endif %}
+            </p>
+            <p class="tagline">
+                submitted <time title="{{ data.created|date("D M d H:i:s Y T") }}" class="live-timestamp">{{ timeAgo(data.created) }}</time> by <a href="/user/{{ data.author }}" class="author may-blank id-{{ data.author_fullname }}">{{ data.author }}</a> to <a href="/r/{{ data.subreddit }}" class="subreddit hover may-blank">r/{{ data.subreddit }}</a>
+                {% if data.all_awardings %}
+                <span class="awardings-bar">
+                    {% for award in data.all_awardings %}
+                    <a href="/r/{{ data.subreddit }}/gilded" class="awarding-link">
+                        <span class="awarding-icon-container">
+                            <img class="awarding-icon" src="{{ award.icon_url }}">
+                        </span>
+                        {{ award.count }}
+                    </a>
+                    {% endfor %}
+                </span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="child"></div>
+    <div class="clearleft"></div>
+</div>
+{% endif %}
+{% endmacro %}

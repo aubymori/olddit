@@ -1,0 +1,23 @@
+{% extends "core.twig" %}
+
+{%- block title -%}
+{{ parent() }}: page not found
+{% endblock %}
+
+{% set errImgs = [
+    "//www.redditstatic.com/reddit404a.png",
+    "//www.redditstatic.com/reddit404b.png",
+    "//www.redditstatic.com/reddit404c.png",
+    "//www.redditstatic.com/reddit404d.png",
+    "//www.redditstatic.com/reddit404e.png"
+] %}
+
+{% block content %}
+<div id="classy-error" class="content">
+    <img src="{{ random(errImgs) }}" alt="">
+    <h1>page not found</h1>
+    <div class="errorpage-message">
+        <p>the page you requested does not exist</p>
+    </div>
+</div>
+{% endblock %}
