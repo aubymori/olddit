@@ -21,7 +21,7 @@
         <div class="duration-overlay">{{ secToMin(data.secure_media.reddit_video.duration) }}</div>
         {% endif %}
     </a>
-    <div class="entry-unvoted">
+    <div class="entry unvoted">
         <div class="top-matter">
             <p class="title">
                 <a href="{{ data.url_overriden_by_dest ? data.url_overriden_by_dest : data.permalink }}" class="title may-blank outbound">{{ data.title }}</a>
@@ -31,22 +31,48 @@
                 </span>
                 {% endif %}
             </p>
+            {% if data.media or data.post_hint and data.post_hint != "link" or data.selftext_html != "" %}
+            <div class="expando-button hide-when-pinned {{ data.is_self ? "selftext" : "video" }} collapsed"></div>
+            {% endif %}
             <p class="tagline">
-                submitted <time title="{{ data.created|date("D M d H:i:s Y T") }}" class="live-timestamp">{{ timeAgo(data.created) }}</time> by <a href="/user/{{ data.author }}" class="author may-blank id-{{ data.author_fullname }}">{{ data.author }}</a> to <a href="/r/{{ data.subreddit }}" class="subreddit hover may-blank">r/{{ data.subreddit }}</a>
+                submitted <time title="{{ data.created|date("D M d H:i:s Y \\G\\M\\TO") }}" class="live-timestamp">{{ timeAgo(data.created) }}</time> by <a href="/user/{{ data.author }}" class="author may-blank id-{{ data.author_fullname }}">{{ data.author }}</a> to <a href="/r/{{ data.subreddit }}" class="subreddit hover may-blank">r/{{ data.subreddit }}</a>
                 {% if data.all_awardings %}
+                {% apply spaceless %}
                 <span class="awardings-bar">
                     {% for award in data.all_awardings %}
+                    {% if loop.index < 5 %}
                     <a href="/r/{{ data.subreddit }}/gilded" class="awarding-link">
-                        <span class="awarding-icon-container">
-                            <img class="awarding-icon" src="{{ award.icon_url }}">
-                        </span>
-                        {{ award.count }}
-                    </a>
+                        <span class="awarding-icon-container"><img class="awarding-icon" src="{{ award.icon_url }}"></span>{{ award.count > 1 ? award.count }}</a>
+                    {% elseif loop.index == data.all_awardings|length and loop.index > 4 %}
+                    <a href="/r/{{ data.subreddit }}/gilded" class="awarding-show-more-link">& {{ data.all_awardings|length - 4 }} more</a>
+                    {% endif %}
                     {% endfor %}
                 </span>
+                {% endapply %}
                 {% endif %}
             </p>
+            <ul class="flat-list buttons">
+                {% apply spaceless %}
+                <li class="first">
+                    <a href="{{ data.permalink }}" class="bylink comments may-blank">{{ data.num_comments }} comments</a>
+                </li>
+                <li class="share">
+                    <a href="javascript: void 0;" class="post-sharing-button">share</a>
+                </li>
+                {% endapply %}
+            </ul>
         </div>
+        {% if data.media or data.post_hint and data.post_hint != "link" or data.selftext_htmll != "" %}
+        <div class="expando expando-uninitialized" style="display: none" data-pin-condition="function() {return this.style.display != 'none';}" data-cachedhtml="{% apply spaceless %}
+            {% if data.post_hint == "image" %}
+            <div class='media-preview' id='media-preview-{{ data.id }}'>
+                
+            </div>
+            {% endif %}
+        {% endapply %}">
+            <span class="error">loading...</span>
+        </div>
+        {% endif %}
     </div>
     <div class="child"></div>
     <div class="clearleft"></div>

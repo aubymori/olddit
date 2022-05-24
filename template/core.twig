@@ -40,6 +40,7 @@
                     </div>
                     <div class="sr-list">
                         <ul class="flat-list sr-bar hover">
+                            {% apply spaceless %}
                             {% for link in rdt.header.srLinks %}
                             <li{{ loop.index == srSelectedLink ? " class=\"selected\"" }}>
                                 {% if loop.index > 1 %}
@@ -48,6 +49,7 @@
                                 <a href="{{ link.url }}" class="choice">{{ link.label }}</a>
                             </li>
                             {% endfor %}
+                            {% endapply %}
                         </ul>
                     </div>
                     <a href="https://old.reddit.com/subreddits/" id="sr-more-link">more »</a>

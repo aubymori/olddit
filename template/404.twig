@@ -4,6 +4,10 @@
 {{ parent() }}: page not found
 {% endblock %}
 
+{% set pagename = {
+    "label": "page not found"
+} %}
+
 {% set errImgs = [
     "//www.redditstatic.com/reddit404a.png",
     "//www.redditstatic.com/reddit404b.png",
