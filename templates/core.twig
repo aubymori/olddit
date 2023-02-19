@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{{ app.title ? app.title : "reddit.com" }}</title>
+        {% include "core/meta.twig" %}
+    </head>
+    <body>
+        <div id="header" role="banner">
+            <a tabindex="1" href="#content" id="jumpToContent">jump to content</a>
+            <div id="sr-header-area"></div>
+            <div id="header-bottom-left">
+                <a href="/" id="header-img" class="default-header" title="">reddit.com</a>
+            </div>
+        </div>
+    </body>
+</html>

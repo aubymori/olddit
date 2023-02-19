@@ -1,0 +1,29 @@
+{
+    "nameWithMotto": "reddit: the front page of the internet",
+    "signUpPromo": {
+        "runs": [
+            {
+                "text": "Want to join? "
+            },
+            {
+                "text": "Log in",
+                "url": "/login",
+                "loginRequired": true,
+                "class": [
+                    "login-link"
+                ]
+            },
+            {
+                "text": " or "
+            },
+            {
+                "text": "sign up",
+                "url": "/login",
+                "loginRequired": true
+            },
+            {
+                "text": " in seconds."
+            }
+        ]
+    }
+}
